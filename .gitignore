@@ -1,0 +1,9 @@
+
+__pycache__/
+*.pyc
+.venv/
+
+test/
+detection/
+data_copy/
+models/vgg_finetuned_classifier.pt

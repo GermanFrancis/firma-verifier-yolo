@@ -1,0 +1,8 @@
+torchvision
+torch
+ultralytics
+pymupdf
+Pillow
+numpy
+streamlit
+
