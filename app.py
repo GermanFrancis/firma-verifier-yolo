@@ -6,6 +6,7 @@ import numpy as np
 from PIL import Image
 import streamlit as st
 from ultralytics import YOLO
+import gdown
 
 import torch
 import torch.nn as nn
@@ -17,15 +18,15 @@ YOLO_MODEL_PATH = "models/best.pt"
 
 VGG_CKPT_PATH = "models/vgg_finetuned_classifier.pt"
 
+VGG_GDRIVE_ID = "bQbJNJRPXwde4296cWSNUeg8PhfYjk8"
+
 CONF_THRES = 0.70
 
 REF_DIR = "data/signatures"
 
-
-
 EMB_IMGSZ = 224
 
-THRESH_SIM = 0.76666
+THRESH_SIM = 0.76
 
 @st.cache_resource
 def load_yolo_model():
@@ -38,14 +39,10 @@ def load_yolo_model():
 
 @st.cache_resource
 def load_vgg_feature_extractor():
-
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    if not os.path.exists(VGG_CKPT_PATH):
-        st.error(
-            f"No se encontró el modelo VGG finetuneado en: {VGG_CKPT_PATH}.\n"
-        )
-        st.stop()
+    # Asegura que el archivo existe; si no, lo descarga desde Drive
+    ensure_file(VGG_CKPT_PATH, VGG_GDRIVE_ID)
 
     checkpoint = torch.load(VGG_CKPT_PATH, map_location=device)
     class_names = checkpoint["class_names"]
@@ -67,6 +64,7 @@ def load_vgg_feature_extractor():
     feature_extractor.eval()
 
     return feature_extractor, class_names, device
+
 
 
 @st.cache_resource
@@ -182,6 +180,20 @@ def pdf_to_images_pymupdf(pdf_bytes, dpi=200):
         pages.append(img)
 
     return pages
+
+def ensure_file(path, gdrive_id: str | None = None):
+
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+
+    if os.path.exists(path):
+        return
+
+    if gdrive_id is None:
+        raise FileNotFoundError(f"No se encontró el archivo requerido: {path}")
+
+    url = f"https://drive.google.com/uc?id={gdrive_id}"
+    st.write(f"Descargando modelo desde Google Drive a: {path} ...")
+    gdown.download(url, path, quiet=False)
 
 def main():
 
