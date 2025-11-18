@@ -40,8 +40,6 @@ def load_yolo_model():
 @st.cache_resource
 def load_vgg_feature_extractor():
     device = "cuda" if torch.cuda.is_available() else "cpu"
-
-    # Asegura que el archivo existe; si no, lo descarga desde Drive
     ensure_file(VGG_CKPT_PATH, VGG_GDRIVE_ID)
 
     checkpoint = torch.load(VGG_CKPT_PATH, map_location=device)
@@ -64,8 +62,6 @@ def load_vgg_feature_extractor():
     feature_extractor.eval()
 
     return feature_extractor, class_names, device
-
-
 
 @st.cache_resource
 def get_vgg_transform():
