@@ -2,6 +2,7 @@ torchvision
 torch
 ultralytics
 pymupdf
+opencv-python-headless
 Pillow
 numpy
 streamlit
