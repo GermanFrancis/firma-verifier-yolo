@@ -7,4 +7,4 @@ __pycache__/
 test/
 detection/
 data_copy/
-models/vgg_finetuned_classifier.pt
+models/
