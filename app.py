@@ -6,6 +6,7 @@ import numpy as np
 from PIL import Image
 import streamlit as st
 from ultralytics import YOLO
+
 import gdown
 
 import torch
@@ -18,7 +19,7 @@ YOLO_MODEL_PATH = "models/best.pt"
 
 VGG_CKPT_PATH = "models/vgg_finetuned_classifier.pt"
 
-VGG_GDRIVE_ID = "bQbJNJRPXwde4296cWSNUeg8PhfYjk8"
+VGG_GDRIVE_ID = "1szSLARkG0UzOtQ1NscNS86M-k_fGPdqE"
 
 CONF_THRES = 0.70
 
@@ -178,7 +179,6 @@ def pdf_to_images_pymupdf(pdf_bytes, dpi=200):
     return pages
 
 def ensure_file(path, gdrive_id: str | None = None):
-
     os.makedirs(os.path.dirname(path), exist_ok=True)
 
     if os.path.exists(path):
@@ -187,9 +187,10 @@ def ensure_file(path, gdrive_id: str | None = None):
     if gdrive_id is None:
         raise FileNotFoundError(f"No se encontró el archivo requerido: {path}")
 
-    url = f"https://drive.google.com/uc?id={gdrive_id}"
     st.write(f"Descargando modelo desde Google Drive a: {path} ...")
-    gdown.download(url, path, quiet=False)
+
+    gdown.download(id=gdrive_id, output=path, quiet=False)
+
 
 def main():
 
