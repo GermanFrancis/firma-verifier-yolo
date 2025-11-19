@@ -164,7 +164,7 @@ def vgg_cosine_match_score(query_img_pil, ref_index, feature_extractor, device, 
 
     return best_dni, best_score, per_dni_scores
 
-def pdf_to_images_pymupdf(pdf_bytes, dpi=200):
+def pdf_to_images_pymupdf(pdf_bytes, dpi=300):
 
     pdf = fitz.open(stream=pdf_bytes, filetype="pdf")
     pages = []
@@ -213,7 +213,7 @@ def main():
         # PDF -> lista de páginas (imágenes)
         if file_type == "application/pdf":
             pdf_bytes = uploaded_file.read()
-            pages = pdf_to_images_pymupdf(pdf_bytes, dpi=200)
+            pages = pdf_to_images_pymupdf(pdf_bytes, dpi=300)
             original_image = pages[0]
 
         else:
@@ -248,15 +248,20 @@ def main():
                     if conf < CONF_THRES:
                         continue
 
-                    x1, y1, x2, y2 = box.xyxy[0].tolist()
-                    x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
-
+                    margin_x = int(0.05 * (x2 - x1))  # 5% de ancho
+                    margin_y = int(0.05 * (y2 - y1))  # 5% de alto
+                    
+                    x1 -= margin_x
+                    x2 += margin_x
+                    y1 -= margin_y
+                    y2 += margin_y
+                    
                     # Seguridad de rangos
                     x1 = max(0, min(x1, w - 1))
                     x2 = max(0, min(x2, w - 1))
                     y1 = max(0, min(y1, h - 1))
                     y2 = max(0, min(y2, h - 1))
-
+                    
                     crop = original_image.crop((x1, y1, x2, y2))
 
                     st.write(f"#### Firma #{i+1}")
