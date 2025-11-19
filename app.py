@@ -14,11 +14,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torchvision import models, transforms as T
 
-
 YOLO_MODEL_PATH = "models/best.pt"
-
 VGG_CKPT_PATH = "models/vgg_finetuned_classifier.pt"
 
+#GDRIVE MODELS DOWNLOAD
+YOLO_GDRIVE_ID = "1oRTDQfd9WeMqnwMSCgaCVgmShrEFbVvE"
 VGG_GDRIVE_ID = "1szSLARkG0UzOtQ1NscNS86M-k_fGPdqE"
 
 CONF_THRES = 0.70
@@ -31,6 +31,8 @@ THRESH_SIM = 0.76
 
 @st.cache_resource
 def load_yolo_model():
+    ensure_file(YOLO_MODEL_PATH, YOLO_GDRIVE_ID)
+
     if not os.path.exists(YOLO_MODEL_PATH):
         st.error(f"No se encontró el modelo YOLO en: {YOLO_MODEL_PATH}")
         st.stop()
