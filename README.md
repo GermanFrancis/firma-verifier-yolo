@@ -2,7 +2,7 @@
 
 Sistema completo para **detección y verificación de firmas manuscritas** utilizando:
 
-- **YOLO** → Detecta automáticamente firmas en documentos PDF o imágenes.  
+- **YOLO** → Detecta automáticamente firmas en documentos PDF.
 - **VGG16 Fine-Tuned + Cosine Similarity** → Extrae un embedding y compara contra firmas registradas por DNI.
 
 Apto para validación documental, flujos administrativos y detección de firmas falsas.
