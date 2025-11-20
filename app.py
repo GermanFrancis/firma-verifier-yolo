@@ -16,18 +16,16 @@ from torchvision import models, transforms as T
 
 YOLO_MODEL_PATH = "models/best.pt"
 VGG_CKPT_PATH = "models/vgg_finetuned_classifier.pt"
+REF_PATH = "refs/signatures"
 
 #GDRIVE MODELS DOWNLOAD
 YOLO_GDRIVE_ID = "1oRTDQfd9WeMqnwMSCgaCVgmShrEFbVvE"
 VGG_GDRIVE_ID = "1szSLARkG0UzOtQ1NscNS86M-k_fGPdqE"
 
 CONF_THRES = 0.70
-
-REF_DIR = "data/signatures"
+THRESH_SIM = 0.87
 
 EMB_IMGSZ = 224
-
-THRESH_SIM = 0.76
 
 @st.cache_resource
 def load_yolo_model():
@@ -102,11 +100,11 @@ def load_reference_embeddings_vgg():
 
     ref_index = {}
 
-    if not os.path.exists(REF_DIR):
-        st.warning(f"No se encontró la carpeta de referencias: {REF_DIR}")
+    if not os.path.exists(REF_PATH):
+        st.warning(f"No se encontró la carpeta de referencias: {REF_PATH}")
         return ref_index
 
-    for dni_path in glob.glob(os.path.join(REF_DIR, "*")):
+    for dni_path in glob.glob(os.path.join(REF_PATH, "*")):
         if not os.path.isdir(dni_path):
             continue
         dni = os.path.basename(dni_path)
