@@ -169,14 +169,19 @@ def pdf_to_images_pymupdf(pdf_bytes, dpi=300):
     zoom = dpi / 72
 
     for page in pdf:
+        zoom = dpi / 72
         mat = fitz.Matrix(zoom, zoom)
-        pix = page.get_pixmap(matrix=mat)
 
-        # convertir a PIL
-        img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
-        pages.append(img)
+        page.set_render_option(fitz.RENDER_FLAG_NO_AA)
 
-    return pages
+        pix = page.get_pixmap(
+            matrix=mat,
+            alpha=False,
+            color_space=fitz.csRGB,
+            annots=False
+        )
+
+    return Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
 
 def ensure_file(path, gdrive_id: str | None = None):
     os.makedirs(os.path.dirname(path), exist_ok=True)
