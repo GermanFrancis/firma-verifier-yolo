@@ -23,7 +23,7 @@ YOLO_GDRIVE_ID = "1oRTDQfd9WeMqnwMSCgaCVgmShrEFbVvE"
 VGG_GDRIVE_ID = "1szSLARkG0UzOtQ1NscNS86M-k_fGPdqE"
 
 CONF_THRES = 0.70
-THRESH_SIM = 0.87
+THRESH_SIM = 0.86
 
 EMB_IMGSZ = 224
 
@@ -166,22 +166,20 @@ def pdf_to_images_pymupdf(pdf_bytes, dpi=300):
 
     pdf = fitz.open(stream=pdf_bytes, filetype="pdf")
     pages = []
-    zoom = dpi / 72
+
+    zoom = dpi / 72.0
+    mat = fitz.Matrix(zoom, zoom)
 
     for page in pdf:
-        zoom = dpi / 72
-        mat = fitz.Matrix(zoom, zoom)
-
-        page.set_render_option(fitz.RENDER_FLAG_NO_AA)
 
         pix = page.get_pixmap(
             matrix=mat,
-            alpha=False,
-            color_space=fitz.csRGB,
-            annots=False
+            alpha=False
         )
+        img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+        pages.append(img)
 
-    return Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+    return pages
 
 def ensure_file(path, gdrive_id: str | None = None):
     os.makedirs(os.path.dirname(path), exist_ok=True)
