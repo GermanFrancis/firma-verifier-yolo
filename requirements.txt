@@ -1,10 +1,14 @@
 torchvision
 torch
-ultralytics
 pymupdf
-opencv-python-headless
 Pillow
 numpy
 streamlit
 gdown
+
+
+# Ultralytics + OpenCV headless
+ultralytics==8.0.20
+opencv-python-headless==4.5.5.64
+
 
