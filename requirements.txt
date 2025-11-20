@@ -2,13 +2,13 @@ torchvision
 torch
 pymupdf
 Pillow
-numpy
+numpy==1.26.4
 streamlit
 gdown
 
 
 # Ultralytics + OpenCV headless
 ultralytics==8.0.20
-opencv-python-headless==4.5.5.64
+opencv-python-headless==4.10.0.84
 
 
