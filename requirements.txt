@@ -1,9 +1,9 @@
-torchvision
-torch
+torch==2.5.1
+torchvision==0.20.1
 pymupdf
 Pillow
-numpy==1.26.4
-streamlit
+numpy==2.2.6
+streamlit==1.51.0
 gdown
 
 
