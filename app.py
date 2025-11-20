@@ -248,24 +248,17 @@ def main():
                     if conf < CONF_THRES:
                         continue
 
+                    # Coordenadas de la caja (xyxy)
                     x1, y1, x2, y2 = box.xyxy[0].tolist()
                     x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
 
-                    margin_x = int(0.05 * (x2 - x1))  # 5% del ancho
-                    margin_y = int(0.05 * (y2 - y1))  # 5% del alto
-
-                    x1 -= margin_x
-                    x2 += margin_x
-                    y1 -= margin_y
-                    y2 += margin_y
-
+                    # Seguridad de rangos
                     x1 = max(0, min(x1, w - 1))
                     x2 = max(0, min(x2, w - 1))
                     y1 = max(0, min(y1, h - 1))
                     y2 = max(0, min(y2, h - 1))
 
                     crop = original_image.crop((x1, y1, x2, y2))
-
 
                     st.write(f"#### Firma #{i+1}")
                     st.image(
