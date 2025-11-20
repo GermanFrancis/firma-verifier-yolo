@@ -15,6 +15,12 @@ Los modelos necesarios para ejecutar la aplicación:
 
 🔗 **https://drive.google.com/drive/folders/1-bQbJNJRPXwde4296cWSNUeg8PhfYjk8?usp=sharing**
 
+## 📂 Carpeta Test (Google Drive)
+
+documentos pdf para probar la aplicación:
+
+🔗 **https://drive.google.com/drive/folders/1mFYWGTqMy4i7ytwmkQIeYugnopjLCqKT?usp=sharing**
+
 Incluye:
 - `best.pt` — Detector YOLO de firmas  
 - `vgg_finetuned_classifier.pt` — Modelo VGG16 finetuneado  
